@@ -66,7 +66,7 @@ void consultarEstoque() {
 
     printf("Estoque:\n");
     for (int i = 0; i < totalProdutos; i++) {
-        printf("Nome: %s, Quantidade: %d, Preço: R$%.2f\n",
+        printf("Nome: %s, Quantidade: %d, Preço: €%.2f\n",
                estoque[i].nome, estoque[i].quantidade, estoque[i].preco);
     }
 }
@@ -82,7 +82,7 @@ void gerarRelatorio() {
     }
 
     printf("Total de artigos vendidos: %d\n", artigosVendidos);
-    printf("Total das vendas: R$%.2f\n", totalVendas);
+    printf("Total das vendas: €%.2f\n", totalVendas);
     printf("Funcionalidade em desenvolvimento!\n");
 }
 
