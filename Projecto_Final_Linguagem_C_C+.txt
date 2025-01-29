@@ -38,7 +38,7 @@ void cadastrarProduto() {
 void registrarVenda() {
     char nome[50];
     int quantidade;
-    int produtoEncontrado = 0;  // Indicador de produto encontrado
+    int produtoEncontrado = 0;  
 
     printf("Nome do produto: ");
     scanf("%s", nome);
@@ -46,7 +46,6 @@ void registrarVenda() {
     scanf("%d", &quantidade);
 
     for (int i = 0; i < totalProdutos; i++) {
-        // Verifica se o nome do produto é encontrado
         if (strcmp(estoque[i].nome, nome) == 0) {
             produtoEncontrado = 1;
             
@@ -56,11 +55,10 @@ void registrarVenda() {
             } else {
                 printf("Estoque insuficiente!\n");
             }
-            break; // Sai do loop quando o produto é encontrado
+            break;
         }
     }
 
-    // Se o produto não for encontrado
     if (!produtoEncontrado) {
         printf("Produto não encontrado!\n");
     }
@@ -80,11 +78,10 @@ void consultarEstoque() {
 }
 
 void gerarRelatorio() {
-    float totalVendas = 0.0f;  // Acumulador para o total das vendas
-    int produtosVendidos = 0;  // Contador para o número de produtos vendidos
+    float totalVendas = 0.0f;
+    int produtosVendidos = 0;  
 
     printf("Relatório do Dia:\n");
-    // Exemplo de como calcular as vendas totais e o total vendido
     for (int i = 0; i < totalProdutos; i++) {
         produtosVendidos += estoque[i].quantidade;
         totalVendas += estoque[i].quantidade * estoque[i].preco;
@@ -97,6 +94,9 @@ void gerarRelatorio() {
 
 int main() {
     int opcao;
+
+    // Mensagem inicial
+    printf("\n🌸  Lusoflores 🌸\n");
 
     do {
         printf("\nMenu:\n");
@@ -128,13 +128,12 @@ int main() {
                 printf("Opção inválida! Por favor, insira uma opção válida.\n");
         }
 
-        // Utiliza o operador ternário para perguntar se o usuário deseja continuar
         printf("\nDeseja realizar outra operação? (1 - Sim, 0 - Não): ");
         int continuar;
         scanf("%d", &continuar);
         if (!continuar) break;
 
-    } while (opcao != 5); // Encerra o programa quando a opção 5 é escolhida.
+    } while (opcao != 5);
 
     return 0;
 }
