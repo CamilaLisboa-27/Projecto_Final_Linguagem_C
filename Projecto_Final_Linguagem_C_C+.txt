@@ -5,8 +5,6 @@
 
 typedef struct {
     char nome[50];
-    char tamanho[10];
-    char cor[20];
     int quantidade;
     float preco;
 } Produto;
@@ -20,27 +18,23 @@ void cadastrarProduto() {
         return;
     }
 
-    printf("Nome: ");
+    printf("Nome do artigo: ");
     scanf("%s", estoque[totalProdutos].nome);
-    printf("Tamanho: ");
-    scanf("%s", estoque[totalProdutos].tamanho);
-    printf("Cor: ");
-    scanf("%s", estoque[totalProdutos].cor);
     printf("Quantidade: ");
     scanf("%d", &estoque[totalProdutos].quantidade);
     printf("Preço: ");
     scanf("%f", &estoque[totalProdutos].preco);
 
     totalProdutos++;
-    printf("Produto cadastrado!\n");
+    printf("Artigo cadastrado!\n");
 }
 
 void registrarVenda() {
     char nome[50];
     int quantidade;
-    int produtoEncontrado = 0;  
+    int produtoEncontrado = 0;
 
-    printf("Nome do produto: ");
+    printf("Nome do artigo: ");
     scanf("%s", nome);
     printf("Quantidade vendida: ");
     scanf("%d", &quantidade);
@@ -48,7 +42,7 @@ void registrarVenda() {
     for (int i = 0; i < totalProdutos; i++) {
         if (strcmp(estoque[i].nome, nome) == 0) {
             produtoEncontrado = 1;
-            
+
             if (estoque[i].quantidade >= quantidade) {
                 estoque[i].quantidade -= quantidade;
                 printf("Venda registrada!\n");
@@ -60,7 +54,7 @@ void registrarVenda() {
     }
 
     if (!produtoEncontrado) {
-        printf("Produto não encontrado!\n");
+        printf("Artigo não encontrado!\n");
     }
 }
 
@@ -72,35 +66,35 @@ void consultarEstoque() {
 
     printf("Estoque:\n");
     for (int i = 0; i < totalProdutos; i++) {
-        printf("Nome: %s, Tamanho: %s, Cor: %s, Quantidade: %d, Preço: R$%.2f\n",
-               estoque[i].nome, estoque[i].tamanho, estoque[i].cor, estoque[i].quantidade, estoque[i].preco);
+        printf("Nome: %s, Quantidade: %d, Preço: R$%.2f\n",
+               estoque[i].nome, estoque[i].quantidade, estoque[i].preco);
     }
 }
 
 void gerarRelatorio() {
     float totalVendas = 0.0f;
-    int produtosVendidos = 0;  
+    int artigosVendidos = 0;
 
     printf("Relatório do Dia:\n");
     for (int i = 0; i < totalProdutos; i++) {
-        produtosVendidos += estoque[i].quantidade;
+        artigosVendidos += estoque[i].quantidade;
         totalVendas += estoque[i].quantidade * estoque[i].preco;
     }
-    
-    printf("Total de produtos vendidos: %d\n", produtosVendidos);
+
+    printf("Total de artigos vendidos: %d\n", artigosVendidos);
     printf("Total das vendas: R$%.2f\n", totalVendas);
     printf("Funcionalidade em desenvolvimento!\n");
 }
 
 int main() {
     int opcao;
+    int continuar;
 
-    // Mensagem inicial
     printf("\n🌸  Lusoflores 🌸\n");
 
     do {
         printf("\nMenu:\n");
-        printf("1. Cadastrar Produto\n");
+        printf("1. Cadastrar artigo\n");
         printf("2. Registrar Venda\n");
         printf("3. Consultar Estoque\n");
         printf("4. Gerar Relatório\n");
@@ -128,11 +122,14 @@ int main() {
                 printf("Opção inválida! Por favor, insira uma opção válida.\n");
         }
 
-        printf("\nDeseja realizar outra operação? (1 - Sim, 0 - Não): ");
-        int continuar;
-        scanf("%d", &continuar);
-        if (!continuar) break;
-
+        // Pergunta se o usuário deseja continuar e verifica se deseja sair
+        if (opcao != 5) {
+            printf("\nDeseja realizar outra operação? (1 - Sim, 0 - Não): ");
+            scanf("%d", &continuar);
+            if (continuar == 0) {
+                break; // Sai do loop caso a resposta seja 0
+            }
+        }
     } while (opcao != 5);
 
     return 0;
