@@ -1,0 +1,140 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_PRODUTOS 100
+
+typedef struct {
+    char nome[50];
+    char tamanho[10];
+    char cor[20];
+    int quantidade;
+    float preco;
+} Produto;
+
+Produto estoque[MAX_PRODUTOS];
+int totalProdutos = 0;
+
+void cadastrarProduto() {
+    if (totalProdutos >= MAX_PRODUTOS) {
+        printf("Estoque cheio!\n");
+        return;
+    }
+
+    printf("Nome: ");
+    scanf("%s", estoque[totalProdutos].nome);
+    printf("Tamanho: ");
+    scanf("%s", estoque[totalProdutos].tamanho);
+    printf("Cor: ");
+    scanf("%s", estoque[totalProdutos].cor);
+    printf("Quantidade: ");
+    scanf("%d", &estoque[totalProdutos].quantidade);
+    printf("Preço: ");
+    scanf("%f", &estoque[totalProdutos].preco);
+
+    totalProdutos++;
+    printf("Produto cadastrado!\n");
+}
+
+void registrarVenda() {
+    char nome[50];
+    int quantidade;
+    int produtoEncontrado = 0;  // Indicador de produto encontrado
+
+    printf("Nome do produto: ");
+    scanf("%s", nome);
+    printf("Quantidade vendida: ");
+    scanf("%d", &quantidade);
+
+    for (int i = 0; i < totalProdutos; i++) {
+        // Verifica se o nome do produto é encontrado
+        if (strcmp(estoque[i].nome, nome) == 0) {
+            produtoEncontrado = 1;
+            
+            if (estoque[i].quantidade >= quantidade) {
+                estoque[i].quantidade -= quantidade;
+                printf("Venda registrada!\n");
+            } else {
+                printf("Estoque insuficiente!\n");
+            }
+            break; // Sai do loop quando o produto é encontrado
+        }
+    }
+
+    // Se o produto não for encontrado
+    if (!produtoEncontrado) {
+        printf("Produto não encontrado!\n");
+    }
+}
+
+void consultarEstoque() {
+    if (totalProdutos == 0) {
+        printf("Estoque vazio!\n");
+        return;
+    }
+
+    printf("Estoque:\n");
+    for (int i = 0; i < totalProdutos; i++) {
+        printf("Nome: %s, Tamanho: %s, Cor: %s, Quantidade: %d, Preço: R$%.2f\n",
+               estoque[i].nome, estoque[i].tamanho, estoque[i].cor, estoque[i].quantidade, estoque[i].preco);
+    }
+}
+
+void gerarRelatorio() {
+    float totalVendas = 0.0f;  // Acumulador para o total das vendas
+    int produtosVendidos = 0;  // Contador para o número de produtos vendidos
+
+    printf("Relatório do Dia:\n");
+    // Exemplo de como calcular as vendas totais e o total vendido
+    for (int i = 0; i < totalProdutos; i++) {
+        produtosVendidos += estoque[i].quantidade;
+        totalVendas += estoque[i].quantidade * estoque[i].preco;
+    }
+    
+    printf("Total de produtos vendidos: %d\n", produtosVendidos);
+    printf("Total das vendas: R$%.2f\n", totalVendas);
+    printf("Funcionalidade em desenvolvimento!\n");
+}
+
+int main() {
+    int opcao;
+
+    do {
+        printf("\nMenu:\n");
+        printf("1. Cadastrar Produto\n");
+        printf("2. Registrar Venda\n");
+        printf("3. Consultar Estoque\n");
+        printf("4. Gerar Relatório\n");
+        printf("5. Sair\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &opcao);
+
+        switch (opcao) {
+            case 1:
+                cadastrarProduto();
+                break;
+            case 2:
+                registrarVenda();
+                break;
+            case 3:
+                consultarEstoque();
+                break;
+            case 4:
+                gerarRelatorio();
+                break;
+            case 5:
+                printf("Saindo...\n");
+                break;
+            default:
+                printf("Opção inválida! Por favor, insira uma opção válida.\n");
+        }
+
+        // Utiliza o operador ternário para perguntar se o usuário deseja continuar
+        printf("\nDeseja realizar outra operação? (1 - Sim, 0 - Não): ");
+        int continuar;
+        scanf("%d", &continuar);
+        if (!continuar) break;
+
+    } while (opcao != 5); // Encerra o programa quando a opção 5 é escolhida.
+
+    return 0;
+}
